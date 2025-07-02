@@ -1,3 +1,4 @@
+import sys
 from stats import (
     count_words,
     count_characters,
@@ -9,10 +10,16 @@ def get_book_text(filepath):
         return f.read()
 
 def main():
-    #Define stuff
-    book_dir = "books/frankenstein.txt"
-    
     #Get stuff
+    if len(sys.argv) != 2:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+    book_dir = None
+    for argument in sys.argv:
+        if "books/" in argument:
+            book_dir = sys.argv[1]
+    if book_dir == None:
+        raise Exception("directory not found")
     text = get_book_text(book_dir)
     number_of_words = count_words(text)
     dict_of_chars = count_characters(text)
